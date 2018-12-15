@@ -25,8 +25,10 @@ import android.content.Context.MODE_PRIVATE
 import novikov.emojiriddle.R.id.editText
 import android.content.Context.MODE_PRIVATE
 import novikov.emojiriddle.R.id.textView
-import jdk.nashorn.internal.runtime.ScriptingFunctions.readLine
+//import jdk.nashorn.internal.runtime.ScriptingFunctions.readLine
 import java.io.BufferedReader
+import java.io.File
+import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.nio.file.Files.exists
 
@@ -92,7 +94,7 @@ class GameActivity : AppCompatActivity() {
 
     private val indArray = riddles.indices.shuffled()
 
-    private val achievementNames:Array<String> = ArrayOf(
+    private val achievementNames:Array<String> = arrayOf(
         "Новичок: Отгадана первая поговорка",
         "Отгадано 5 поговорок",
         "Отгадано 10 поговорок",
@@ -104,7 +106,7 @@ class GameActivity : AppCompatActivity() {
         "Пропущено 5 поговорок",
         "Пропущено 10 поговорок"
     )
-    private val unlockedAchievements: BooleanArray =  BooleanArray(achievementNames.size)
+    private var unlockedAchievements: BooleanArray =  BooleanArray(achievementNames.size)
     val maxWidth = 100
 
     var currentRiddleInd = 0
@@ -282,8 +284,9 @@ class GameActivity : AppCompatActivity() {
             // Open Stream to write file.
             val context:Context = this;
             val out = context.openFileOutput("achievements.txt", MODE_PRIVATE)
-            out.write(unlockedAchievements)
-            out.
+            for (item in unlockedAchievements) {
+                out.write(if (item) 1 else 0)
+            }
             out.close()
             Toast.makeText(this, "File saved!", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
@@ -295,23 +298,23 @@ class GameActivity : AppCompatActivity() {
     private fun readAchievements() {
         if (fileExist("achievements.txt")){
 
-            try {
-                // Open stream to read file.
-                val context: Context = this
-                val inputStream = context.openFileInput("achievements.txt")
 
-                val br = BufferedReader(InputStreamReader(inputStream))
+            val file = File("achievements.txt")
+            val inputStream = FileInputStream(file)
+            val fileLength = file.length() as Int
 
-                val sb = StringBuilder()
-                var s: String? = null
-                while ((s = br.readLine()) != null) {
-                    sb.append(s).append("\n")
+            val data = ByteArray(fileLength)
+            val output = BooleanArray(fileLength)
+
+            inputStream.read(data)
+            for (X in data.indices) {
+                if (data[X].toInt() != 0) {
+                    output[X] = true
+                    continue
                 }
-                this.textView.setText(sb.toString())
-
-            } catch (e: Exception) {
-                Toast.makeText(this, "Error:" + e.message, Toast.LENGTH_SHORT).show()
+                output[X] = false
             }
+            unlockedAchievements = output
         }
         else{
             for (i in achievementNames.indices){
@@ -323,8 +326,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun fileExist(fname: String): Boolean {
-        val context:Context = this;
-        val file = context().getFileStreamPath(fname)
+        val context:Context = this
+        val file = context.getFileStreamPath(fname)
         return file.exists()
     }
 }
