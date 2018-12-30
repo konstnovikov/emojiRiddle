@@ -37,6 +37,9 @@ import java.nio.file.Files.exists
 
 class GameActivity : AppCompatActivity() {
 
+    val RIDDLES_ANSWERED_IND = 0
+    val RIDDLES_SKIPPED_IND = 1
+
     private val riddles:Array<Array<String>> = arrayOf(
         arrayOf("one", "stadium", "not", "warrior"),
         arrayOf("book", "book", "book", "mother", "study"),
@@ -90,7 +93,7 @@ class GameActivity : AppCompatActivity() {
         "Нет дыма без огня."
     )
 
-
+Сила есть ума не надо! две одинакоые загадки в словаре
 
     private val indArray = riddles.indices.shuffled()
 
@@ -106,13 +109,52 @@ class GameActivity : AppCompatActivity() {
         "Пропущено 5 поговорок",
         "Пропущено 10 поговорок"
     )
+    private val achievementReactions:Array<String> = arrayOf(
+        "Новичок: Отгадана первая поговорка",
+        "Отгадано 5 поговорок",
+        "Отгадано 10 поговорок",
+        "Отгаданы все поговорки",
+        "Отгадано 5 поговорок подряд",
+        "Отгадано 10 поговорок подряд",
+        "5 попыток на одну поговорку",
+        "10 попыток на одну поговорку",
+        "Пропущено 5 поговорок",
+        "Пропущено 10 поговорок",
+        "Пропущено 5 поговорок подряд",
+        "Пропущено 10 поговорок подряд"
+    )
+
+    val FIRST_RIDDLE_ANSWERED_IND = 0
+    val FIVE_RIDDLES_ANSWERED_IND = 1
+    val TEN_RIDDLES_ANSWERED_IND = 2
+    val ALL_RIDDLES_ANSWERED_IND = 3
+    val FIVE_RIDDLES_IN_A_ROW_ANSWERED_IND = 4
+    val TEN_RIDDLES_IN_A_ROW_ANSWERED_IND = 5
+    val FIVE_ATTEMPTS_ON_A_RIDDLE_IND = 6
+    val TEN_ATTEMPTS_ON_A_RIDDLE_IND = 7
+    val FIVE_RIDDLES_SKIPPED_IND = 8
+    val TEN_RIDDLES_SKIPPED_IND = 9
+    val FIVE_RIDDLES_IN_A_ROW_SKIPPED_IND = 10
+    val TEN_RIDDLES_IN_A_ROW_SKIPPED_IND = 11
+
     private var unlockedAchievements: BooleanArray =  BooleanArray(achievementNames.size)
+    private var riddlesAnsweredArray: BooleanArray = BooleanArray(riddles.size)
+    private var riddlesSkippedArray: BooleanArray = BooleanArray(riddles.size)
+
+
+    private var riddlesAnswered = 0
+    private var riddleAttempts: IntArray = IntArray(riddles.size)
+
+
     val maxWidth = 100
 
     var currentRiddleInd = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkInputFiles()
+        readState()
+        readAchievements()
         setContentView(R.layout.activity_game)
         drawMainScreen(indArray[currentRiddleInd])
         supportActionBar?.hide()
@@ -150,6 +192,8 @@ class GameActivity : AppCompatActivity() {
         val messageTextView = group.getChildAt(0) as TextView
         messageTextView.textSize = 25f
         if (rightAnswerGiven) {
+            riddlesAnsweredArray[currentRiddleInd] = true
+            riddlesSkippedArray[currentRiddleInd] = false
             rightAnswer(view)
 //            popupMessage.show()
 //
@@ -157,6 +201,8 @@ class GameActivity : AppCompatActivity() {
         }
         else
             showError()
+        riddleAttempts[currentRiddleInd]++
+        checkAchievements()
 
     }
     fun skipRiddleButtonReaction(view: View){
@@ -288,20 +334,18 @@ class GameActivity : AppCompatActivity() {
                 out.write(if (item) 1 else 0)
             }
             out.close()
-            Toast.makeText(this, "File saved!", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(this, "Error:" + e.message, Toast.LENGTH_SHORT).show()
         }
 
     }
-
     private fun readAchievements() {
-        if (fileExist("achievements.txt")){
+        if (fileExist(  "achievements.txt")){
 
 
-            val file = File("achievements.txt")
+            val file = this.getFileStreamPath("achievements.txt")
             val inputStream = FileInputStream(file)
-            val fileLength = file.length() as Int
+            val fileLength = file.length().toInt()
 
             val data = ByteArray(fileLength)
             val output = BooleanArray(fileLength)
@@ -325,9 +369,176 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-    fun fileExist(fname: String): Boolean {
+    private fun checkAchievements(){
+        if (numberOfTrues(riddlesAnsweredArray) > 0 && !unlockedAchievements[FIRST_RIDDLE_ANSWERED_IND]) {
+            unlockedAchievements[FIRST_RIDDLE_ANSWERED_IND] = true
+            Toast.makeText(this, achievementReactions[FIRST_RIDDLE_ANSWERED_IND], Toast.LENGTH_SHORT).show()
+        }
+        if (numberOfTrues(riddlesAnsweredArray) >= 5 && !unlockedAchievements[FIVE_RIDDLES_ANSWERED_IND]) {
+            unlockedAchievements[FIVE_RIDDLES_ANSWERED_IND] = true
+            Toast.makeText(this, achievementReactions[FIVE_RIDDLES_ANSWERED_IND], Toast.LENGTH_SHORT).show()
+        }
+        if (numberOfTrues(riddlesAnsweredArray) >= 10 && !unlockedAchievements[TEN_RIDDLES_ANSWERED_IND]) {
+            unlockedAchievements[TEN_RIDDLES_ANSWERED_IND] = true
+            Toast.makeText(this, achievementReactions[TEN_RIDDLES_ANSWERED_IND], Toast.LENGTH_SHORT).show()
+        }
+        if (numberOfTrues(riddlesAnsweredArray) == riddlesAnsweredArray.size && !unlockedAchievements[ALL_RIDDLES_ANSWERED_IND]) {
+            unlockedAchievements[ALL_RIDDLES_ANSWERED_IND] = true
+            Toast.makeText(this, achievementReactions[ALL_RIDDLES_ANSWERED_IND], Toast.LENGTH_SHORT).show()
+        }
+        if (numberOfTruesInARow(riddlesAnsweredArray) >= 5 && !unlockedAchievements[FIVE_RIDDLES_IN_A_ROW_ANSWERED_IND]) {
+            unlockedAchievements[FIVE_RIDDLES_IN_A_ROW_ANSWERED_IND] = true
+            Toast.makeText(this, achievementReactions[FIVE_RIDDLES_IN_A_ROW_ANSWERED_IND], Toast.LENGTH_SHORT).show()
+        }
+        if (numberOfTruesInARow(riddlesAnsweredArray) >= 10 && !unlockedAchievements[TEN_RIDDLES_IN_A_ROW_ANSWERED_IND]) {
+            unlockedAchievements[TEN_RIDDLES_IN_A_ROW_ANSWERED_IND] = true
+            Toast.makeText(this, achievementReactions[TEN_RIDDLES_IN_A_ROW_ANSWERED_IND], Toast.LENGTH_SHORT).show()
+        }
+        if (riddleAttempts.max()!! >= 5 && !unlockedAchievements[FIVE_ATTEMPTS_ON_A_RIDDLE_IND]){
+            unlockedAchievements[FIVE_ATTEMPTS_ON_A_RIDDLE_IND] = true
+            Toast.makeText(this, achievementReactions[FIVE_ATTEMPTS_ON_A_RIDDLE_IND], Toast.LENGTH_SHORT).show()
+        }
+        if (riddleAttempts.max()!! >= 10 && !unlockedAchievements[TEN_ATTEMPTS_ON_A_RIDDLE_IND]){
+            unlockedAchievements[TEN_ATTEMPTS_ON_A_RIDDLE_IND] = true
+            Toast.makeText(this, achievementReactions[TEN_ATTEMPTS_ON_A_RIDDLE_IND], Toast.LENGTH_SHORT).show()
+        }
+
+        if (numberOfTrues(riddlesSkippedArray) >= 5 && !unlockedAchievements[FIVE_RIDDLES_SKIPPED_IND]) {
+            unlockedAchievements[FIVE_RIDDLES_SKIPPED_IND] = true
+            Toast.makeText(this, achievementReactions[FIVE_RIDDLES_SKIPPED_IND], Toast.LENGTH_SHORT).show()
+        }
+        if (numberOfTrues(riddlesSkippedArray) >= 10 && !unlockedAchievements[TEN_RIDDLES_SKIPPED_IND]) {
+            unlockedAchievements[TEN_RIDDLES_SKIPPED_IND] = true
+            Toast.makeText(this, achievementReactions[TEN_RIDDLES_SKIPPED_IND], Toast.LENGTH_SHORT).show()
+        }
+        if (numberOfTruesInARow(riddlesSkippedArray) >= 5 && !unlockedAchievements[FIVE_RIDDLES_IN_A_ROW_SKIPPED_IND]) {
+            unlockedAchievements[FIVE_RIDDLES_IN_A_ROW_SKIPPED_IND] = true
+            Toast.makeText(this, achievementReactions[FIVE_RIDDLES_IN_A_ROW_SKIPPED_IND], Toast.LENGTH_SHORT).show()
+        }
+        if (numberOfTruesInARow(riddlesSkippedArray) >= 10 && !unlockedAchievements[TEN_RIDDLES_IN_A_ROW_SKIPPED_IND]) {
+            unlockedAchievements[TEN_RIDDLES_SKIPPED_IND] = true
+            Toast.makeText(this, achievementReactions[TEN_RIDDLES_SKIPPED_IND], Toast.LENGTH_SHORT).show()
+        }
+        writeState()
+        saveAchivements()
+    }
+
+    private fun numberOfTruesInARow(boolArray: BooleanArray): Int{
+        var num:Int = 0
+        var maxTrueInARow: Int = 0
+        for (i in boolArray.indices){
+            if (boolArray[i]) {
+                num++
+                if (num > maxTrueInARow){
+                    maxTrueInARow = num
+                }
+            }
+            else{
+                num = 0
+            }
+        }
+        return maxTrueInARow
+    }
+
+    private fun numberOfTrues(boolArray: BooleanArray): Int {
+        var num:Int = 0
+        for (i in boolArray.indices){
+            if (boolArray[i]) {
+                num++
+            }
+        }
+        return num
+    }
+
+    private fun readState() {
+        if (fileExist("state.txt")){
+
+            val file = this.getFileStreamPath("state.txt")
+            val inputStream = FileInputStream(file)
+            val fileLength = file.length().toInt()
+
+            val data = ByteArray(fileLength)
+            val output = BooleanArray(fileLength)
+
+            inputStream.read(data)
+
+            riddlesAnswered = data[RIDDLES_ANSWERED_IND].toInt()
+
+            for (i in riddlesAnsweredArray.indices){
+                var answered:Boolean = false
+                if (data[i + RIDDLES_SKIPPED_IND].toInt() != 0){
+                    answered = true
+                }
+                riddlesAnsweredArray[i] = answered
+            }
+            for (i in riddlesSkippedArray.indices){
+                var skipped:Boolean = false
+                if (data[i + riddlesAnsweredArray.size + RIDDLES_SKIPPED_IND].toInt() != 0){
+                    skipped = true
+                }
+                riddlesAnsweredArray[i] = skipped
+            }
+            for (i in riddleAttempts.indices){
+                riddleAttempts[i] = data[i + riddlesAnsweredArray.size + riddlesSkippedArray.size + RIDDLES_SKIPPED_IND].toInt()
+            }
+        }
+        else{
+            for (i in riddlesAnsweredArray.indices)
+                riddlesAnsweredArray[i] = false
+            for (i in riddlesSkippedArray.indices)
+                riddlesSkippedArray[i] = false
+            for (i in riddleAttempts.indices)
+                riddleAttempts[i] = 0
+            riddlesAnswered = 0
+        }
+    }
+
+    private fun writeState() {
+        val context:Context = this;
+        val out = context.openFileOutput("state.txt", MODE_PRIVATE)
+        out.write(riddlesAnswered)
+        for (item in riddlesAnsweredArray) {
+            out.write(if (item) 1 else 0)
+        }
+        for (item in riddlesSkippedArray) {
+            out.write(if (item) 1 else 0)
+        }
+        for (item in riddleAttempts) {
+            out.write(item)
+        }
+        out.close()
+    }
+
+    private fun checkInputFiles() {
+        if (fileExist("state.txt")) {
+            val file = this.getFileStreamPath("state.txt")
+            val fileLength = file.length().toInt()
+            if (fileLength != 1 + riddlesAnsweredArray.size + riddlesSkippedArray.size + riddleAttempts.size){
+                file.delete()
+            }
+        }
+        if (fileExist(  "achievements.txt")) {
+
+
+            val file = this.getFileStreamPath("achievements.txt")
+            val fileLength = file.length().toInt()
+            if (fileLength != unlockedAchievements.size){
+                file.delete()
+            }
+        }
+
+    }
+
+    private fun fileExist(fname: String): Boolean {
         val context:Context = this
         val file = context.getFileStreamPath(fname)
         return file.exists()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        writeState()
+        saveAchivements()
     }
 }

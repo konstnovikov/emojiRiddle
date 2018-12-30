@@ -19,6 +19,10 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
     }
+    fun achievementsButtonRespond(view: View) {
+        val intent = Intent(this, AchivementsActivity::class.java)
+        startActivity(intent)
+    }
     fun rulesButtonRespond(view: View) {
         val intent = Intent(this, RulesActivity::class.java)
         startActivity(intent)
