@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:ordering="together">
+<set android:ordering="sequentially">
+<objectAnimator
+android:propertyName="backgroundColor"
+android:duration="100"
+android:valueFrom="#FFFFFF"
+android:valueTo="#FF0000"
+android:startOffset="0"
+android:repeatCount="0"
+android:valueType="colorType"
+android:repeatMode="reverse"
+/>
+<objectAnimator
+android:propertyName="backgroundColor"
+android:duration="100"
+android:valueFrom="#FF0000"
+android:valueTo="#FFFFFF"
+android:startOffset="0"
+android:repeatCount="0"
+android:repeatMode="reverse"
+android:valueType="colorType"
+/>
+</set>
+        <objectAnimator
+                android:propertyName="translationX"
+                android:duration="40"
+                android:valueFrom="0"
+                android:valueTo="10dp"
+                android:startOffset="0"
+                android:repeatCount="5"
+                android:repeatMode="reverse"
+                android:valueType="floatType"
+
+        />
+        </set>

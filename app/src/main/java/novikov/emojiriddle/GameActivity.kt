@@ -12,7 +12,7 @@ import android.graphics.Point
 import android.os.Bundle
 import android.os.Handler
 import android.os.Vibrator
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +24,7 @@ import android.widget.Toast
 import android.content.Context.MODE_PRIVATE
 import novikov.emojiriddle.R.id.editText
 import android.content.Context.MODE_PRIVATE
+import com.google.android.flexbox.FlexboxLayout
 import novikov.emojiriddle.R.id.textView
 //import jdk.nashorn.internal.runtime.ScriptingFunctions.readLine
 import java.io.BufferedReader
@@ -93,7 +94,6 @@ class GameActivity : AppCompatActivity() {
         "Нет дыма без огня."
     )
 
-Сила есть ума не надо! две одинакоые загадки в словаре
 
     private val indArray = riddles.indices.shuffled()
 
@@ -215,45 +215,65 @@ class GameActivity : AppCompatActivity() {
             drawMainScreen(indArray[currentRiddleInd])
     }
 
-    private fun drawMainScreen(numberOfRiddle: Int){
+    private fun drawEmojiSequence(numberOfRiddle: Int){
+        val scale = resources.displayMetrics.density
         val currentEmojiList = riddles[numberOfRiddle];
-        var sumWidth = 1000000
-        val emojiTable:TableLayout = findViewById(R.id.wholeTable);
-
+        val emojiTable: FlexboxLayout = findViewById(R.id.emojiSequenceView)
         if (emojiTable.childCount > 0)
             emojiTable.removeAllViews()
-
-        val display = windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        val width = size.x
-
-
-
         for (i in currentEmojiList.indices) {
             val image = ImageView(this)
-            image.setImageResource(getImageId(this, currentEmojiList[i].toString()))
+            image.setImageResource(getImageId(this, currentEmojiList[i]))
             image.adjustViewBounds = true
-            image.maxWidth = maxWidth
-
-            if (sumWidth + maxWidth > width) {
-                val tableRow = TableRow(this)
-                emojiTable.addView(tableRow)
-                sumWidth = 0
-            }
-            sumWidth += maxWidth
-
-
-            val numberOfRows = emojiTable.childCount
-            val lastRowView = emojiTable.getChildAt(numberOfRows - 1)
-            val lastRow: TableRow = lastRowView as TableRow
-            lastRow.addView(image)
+            image.maxWidth = maxWidth * 2
+//            image.layoutParams.width = (100 * scale).toInt()
+//            image.layoutParams.height = (100 * scale).toInt()
+            emojiTable.addView(image)
         }
+
+    }
+
+    private fun drawMainScreen(numberOfRiddle: Int){
+        drawEmojiSequence(numberOfRiddle)
+//        val currentEmojiList = riddles[numberOfRiddle];
+//        var sumWidth = 1000000
+//        val emojiTable:TableLayout = findViewById(R.id.wholeTable);
+//
+//        if (emojiTable.childCount > 0)
+//            emojiTable.removeAllViews()
+//
+//        val display = windowManager.defaultDisplay
+//        val size = Point()
+//        display.getSize(size)
+//        val width = size.x
+//
+//
+//
+//        for (i in currentEmojiList.indices) {
+//            val image = ImageView(this)
+//            image.setImageResource(getImageId(this, currentEmojiList[i].toString()))
+//            image.adjustViewBounds = true
+//            image.maxWidth = maxWidth
+//
+//            if (sumWidth + maxWidth > width) {
+//                val tableRow = TableRow(this)
+//                emojiTable.addView(tableRow)
+//                sumWidth = 0
+//            }
+//            sumWidth += maxWidth
+//
+//
+//            val numberOfRows = emojiTable.childCount
+//            val lastRowView = emojiTable.getChildAt(numberOfRows - 1)
+//            val lastRow: TableRow = lastRowView as TableRow
+//            lastRow.addView(image)
+//        }
         val answerTextField:EditText = findViewById(R.id.editText)
         answerTextField.text.clear()
 
         val editText:EditText = findViewById(R.id.editText)
         editText.setBackgroundColor(Color.WHITE)
+
 
         val ansButton:Button = findViewById(R.id.ansButton)
         ansButton.isClickable = true
