@@ -25,6 +25,8 @@ import android.content.Context.MODE_PRIVATE
 import novikov.emojiriddle.R.id.editText
 import android.content.Context.MODE_PRIVATE
 import com.google.android.flexbox.FlexboxLayout
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import novikov.emojiriddle.R.id.textView
 //import jdk.nashorn.internal.runtime.ScriptingFunctions.readLine
 import java.io.BufferedReader
@@ -32,7 +34,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.nio.file.Files.exists
-
+import com.google.android.gms.ads.AdView
 
 
 
@@ -169,6 +171,14 @@ class GameActivity : AppCompatActivity() {
             this, android.R.layout.simple_dropdown_item_1line, adageList
         )
         answerView.setAdapter(adapter)
+
+
+        MobileAds.initialize(applicationContext, "@string/app_id_admob")
+        val mAdView: AdView = findViewById(R.id.adView)
+        val adRequest: AdRequest = AdRequest.Builder()
+                                            .addTestDevice("123456")
+                                            .build()
+        mAdView.loadAd(adRequest)
 
     }
 

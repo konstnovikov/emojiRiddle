@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">EmojiRiddle</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_intro_skip_button">Пропустить</string>
+    <string name="app_intro_done_button">Готово</string>
+    <string name="banner_ad_unit_id">ca-app-pub-8271832273873724/4942559129</string>
+    <string name="app_id_admob">ca-app-pub-8271832273873724~4060081664</string>
 </resources>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "154236348159",
+    "firebase_url": "https://emojiriddle.firebaseio.com",
+    "project_id": "emojiriddle",
+    "storage_bucket": "emojiriddle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154236348159:android:74da4691b2661834",
+        "android_client_info": {
+          "package_name": "novikov.emojiriddle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154236348159-h4ska29030ifp2qvmu39o0eibl6pqj9j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "novikov.emojiriddle",
+            "certificate_hash": "0f5469ce128b6628d7d678ce039f8666004f496f"
+          }
+        },
+        {
+          "client_id": "154236348159-o057a6f9nck5tbqa5iqkphh0dkbuq3ru.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0X_BNw5j4RABkvTG1WPOVkfp9dW8mQZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154236348159-o057a6f9nck5tbqa5iqkphh0dkbuq3ru.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
