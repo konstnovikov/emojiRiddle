@@ -161,6 +161,7 @@ class GameActivity : AppCompatActivity() {
         drawMainScreen(indArray[currentRiddleInd])
         supportActionBar?.hide()
 
+
         val answerView = findViewById<AutoCompleteTextView>(R.id.editText)
 
         val inputStream = this.resources.openRawResource(R.raw.dictionary)
@@ -175,9 +176,7 @@ class GameActivity : AppCompatActivity() {
 
         MobileAds.initialize(applicationContext, "@string/app_id_admob")
         val mAdView: AdView = findViewById(R.id.adView)
-        val adRequest: AdRequest = AdRequest.Builder()
-                                            .addTestDevice("123456")
-                                            .build()
+        val adRequest: AdRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
     }
@@ -290,6 +289,9 @@ class GameActivity : AppCompatActivity() {
 
         val nextButton:Button = findViewById(R.id.skipButton)
         nextButton.text = "ПРОПУСТИТЬ"
+
+        val cancelButtonId = getImageId(this, "ic_cancel_black_24dp.xml")
+        editText.setCompoundDrawablesWithIntrinsicBounds(0, cancelButtonId, 0, 0)
     }
 
     private fun getImageId(context: Context, imageName: String): Int {

@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
             //  Create a new boolean and preference and set it to true
             preferenceHelper = PreferenceHelper(this)
-            preferenceHelper!!.putIntro("")
+            //preferenceHelper!!.putIntro("")
             val isFirstStart = preferenceHelper!!.getIntro().equals("");
             //val isFirstStart = true;
             //val isFirstStart = getPrefs.getBoolean("firstStart", true)

@@ -8,7 +8,8 @@
         tools:context=".AboutActivity">
 
     <TextView
-            android:text="Эмодзи взяты с такого-то сайта"
+            android:text="В приложении использованы эмодзи из базы данных EmojiOne v4 (в настоящий момент база данных переименована и размещена на сайте https://www.joypixels.com/) "
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView" android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"

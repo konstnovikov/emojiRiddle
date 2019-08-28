@@ -27,16 +27,31 @@
         </com.google.android.flexbox.FlexboxLayout>
 
 
-        <AutoCompleteTextView
+        <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/editText"
-                tools:text="Введите ответ"
-                android:fadingEdge="none|horizontal|vertical" tools:background="@color/colorAccent"
-                android:layout_margin="8dp"/>
+                android:layout_margin="8dp">
+
+            <AutoCompleteTextView
+                    android:id="@+id/editText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:hint="Введите ответ"
+                    />
+
+            <Button
+                    android:id="@+id/eraseButton"
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:layout_gravity="end|top"
+                    android:background="@drawable/ic_cancel_black_24dp"
+                    android:onClick="eraseText"/>
+
+        </FrameLayout>
+
 
 
         <LinearLayout
@@ -53,14 +68,6 @@
                     android:id="@+id/skipButton"
                     android:onClick="skipRiddleButtonReaction"
 
-            />
-            <Button
-                    android:text="Стереть все"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:id="@+id/eraseButton"
-                    android:onClick="eraseText"
             />
             <Button
                     android:layout_width="0dp"
