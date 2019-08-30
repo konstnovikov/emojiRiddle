@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
             //  If the activity has never started before...
             if (isFirstStart) {
+                PreferenceHelper(this)!!.putRiddleInd(0)
                 val intent = Intent(this, WelcomeActivity::class.java)
                 startActivity(intent)
 

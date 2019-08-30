@@ -5,22 +5,32 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
         tools:context=".MainActivity">
 
 
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="104dp" app:srcCompat="@drawable/head_icon" android:id="@+id/imageView4"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-    >
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent">
         <Button
                 android:text="Играть"
                 android:layout_width="match_parent"
                 android:id="@+id/playButton"
                 android:onClick="playButtonRespond"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_height="0dp"
                 android:layout_margin="8dp"
+                style="@style/AppTheme.RoundedCornerMaterialButton"
         />
         <Button
                 android:text="Достижения"
@@ -29,6 +39,7 @@
                 android:layout_weight="1"
                 android:id="@+id/achievementsButton"
                 android:onClick="achievementsButtonRespond"
+                style="@style/AppTheme.RoundedCornerMaterialButton"
                 android:layout_margin="8dp"/>
         <Button
                 android:text="Правила игры"
@@ -37,6 +48,7 @@
                 android:layout_weight="1"
                 android:id="@+id/rulesButton"
                 android:onClick="rulesButtonRespond"
+                style="@style/AppTheme.RoundedCornerMaterialButton"
                 android:layout_margin="8dp"/>
         <Button
                 android:text="О приложении"
@@ -45,6 +57,7 @@
                 android:layout_weight="1"
                 android:id="@+id/aboutButton"
                 android:onClick="aboutButtonRespond"
+                style="@style/AppTheme.RoundedCornerMaterialButton"
                 android:layout_margin="8dp"/>
         <Button
                 android:text="Выход"
@@ -52,6 +65,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:id="@+id/button" android:onClick="exitButtonRespond"
+                style="@style/AppTheme.RoundedCornerMaterialButton"
                 android:layout_margin="8dp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

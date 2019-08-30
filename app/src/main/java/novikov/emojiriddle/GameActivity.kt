@@ -44,6 +44,15 @@ class GameActivity : AppCompatActivity() {
     val RIDDLES_SKIPPED_IND = 1
 
     private val riddles:Array<Array<String>> = arrayOf(
+        arrayOf("not", "king", "right", "head"),
+        arrayOf("eye","eye","right","fear"),
+        arrayOf("nurse","nurse","nurse","nurse","nurse","nurse","nurse","baby","not","eye"),
+        arrayOf("ruler","ruler","ruler","ruler","ruler","ruler","ruler","scissors"),
+        arrayOf("worker","not","wolf","worker","not","right","tree","tree","tree"),
+        arrayOf("run","laugh"),
+        arrayOf("rabbit","rabbit","oops"),
+        arrayOf("head","thumb","head","head","thumb","thumb"),
+        arrayOf("intelligence","right","oldman"),
         arrayOf("one", "stadium", "not", "warrior"),
         arrayOf("book", "book", "book", "mother", "study"),
         arrayOf("strength", "stop", "intelligence"),
@@ -70,6 +79,15 @@ class GameActivity : AppCompatActivity() {
         arrayOf("not", "fire", "not", "steam")
     )
     val answer = arrayOf(
+        "Без царя в голове.",
+        "У страха глаза велики.",
+        "У семи нянек дитя без глаза.",
+        "Семь раз отмерь - один раз отрежь.",
+        "Работа не волк - в лес не убежит.",
+        "Поспешишь — людей насмешишь.",
+        "За двумя зайцами погонишься, ни одного не поймаешь.",
+        "Одна голова хорошо, а две - лучше.",
+        "Будешь много знать — скоро состаришься.",
         "Один в поле не воин.",
         "Повторенье - мать ученья.",
         "Сила есть, ума не надо.",
@@ -97,7 +115,7 @@ class GameActivity : AppCompatActivity() {
     )
 
 
-    private val indArray = riddles.indices.shuffled()
+    private val indArray = riddles.indices
 
     private val achievementNames:Array<String> = arrayOf(
         "Новичок: Отгадана первая поговорка",
@@ -150,7 +168,6 @@ class GameActivity : AppCompatActivity() {
 
     val maxWidth = 100
 
-    var currentRiddleInd = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -158,7 +175,16 @@ class GameActivity : AppCompatActivity() {
         readState()
         readAchievements()
         setContentView(R.layout.activity_game)
-        drawMainScreen(indArray[currentRiddleInd])
+        for (i in riddlesAnsweredArray.indices)
+        {
+            if (!riddlesAnsweredArray[i])
+            {
+                PreferenceHelper(this)!!.putRiddleInd(i)
+                break
+            }
+
+        }
+        drawMainScreen()
         supportActionBar?.hide()
 
 
@@ -188,12 +214,12 @@ class GameActivity : AppCompatActivity() {
 
         var answerReactionString: String
         var rightAnswerGiven: Boolean
-        if (checkAnswerString(ans, answer[indArray[currentRiddleInd]])) {
+        if (checkAnswerString(ans, answer[PreferenceHelper(this)!!.getRiddleInd()])) {
             answerReactionString = "Ура! Правильно!"
             rightAnswerGiven = true
         }
         else {
-            answerReactionString = "Даже не близко!"
+            answerReactionString = "Попробуйте еще!"
             rightAnswerGiven = false
         }
         val popupMessage = Toast.makeText(this, answerReactionString, Toast.LENGTH_SHORT)
@@ -201,8 +227,8 @@ class GameActivity : AppCompatActivity() {
         val messageTextView = group.getChildAt(0) as TextView
         messageTextView.textSize = 25f
         if (rightAnswerGiven) {
-            riddlesAnsweredArray[currentRiddleInd] = true
-            riddlesSkippedArray[currentRiddleInd] = false
+            riddlesAnsweredArray[PreferenceHelper(this)!!.getRiddleInd()] = true
+            riddlesSkippedArray[PreferenceHelper(this)!!.getRiddleInd()] = false
             rightAnswer(view)
 //            popupMessage.show()
 //
@@ -210,18 +236,28 @@ class GameActivity : AppCompatActivity() {
         }
         else
             showError()
-        riddleAttempts[currentRiddleInd]++
+        riddleAttempts[PreferenceHelper(this)!!.getRiddleInd()]++
         checkAchievements()
 
     }
     fun skipRiddleButtonReaction(view: View){
-        currentRiddleInd += 1
+        val currentRiddleInd = PreferenceHelper(this)!!.getRiddleInd() + 1
         if (currentRiddleInd >= riddles.size) {
             finish()
             outOfRiddlesRespond(view)
         }
-        else
-            drawMainScreen(indArray[currentRiddleInd])
+        else {
+            PreferenceHelper(this)!!.putRiddleInd(currentRiddleInd)
+            drawMainScreen()
+        }
+    }
+
+    fun prevRiddleButtonReaction(view: View){
+        if (PreferenceHelper(this)!!.getRiddleInd() != 0)
+        {
+            PreferenceHelper(this)!!.putRiddleInd(PreferenceHelper(this)!!.getRiddleInd() - 1)
+            drawMainScreen()
+        }
     }
 
     private fun drawEmojiSequence(numberOfRiddle: Int){
@@ -242,56 +278,31 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-    private fun drawMainScreen(numberOfRiddle: Int){
-        drawEmojiSequence(numberOfRiddle)
-//        val currentEmojiList = riddles[numberOfRiddle];
-//        var sumWidth = 1000000
-//        val emojiTable:TableLayout = findViewById(R.id.wholeTable);
-//
-//        if (emojiTable.childCount > 0)
-//            emojiTable.removeAllViews()
-//
-//        val display = windowManager.defaultDisplay
-//        val size = Point()
-//        display.getSize(size)
-//        val width = size.x
-//
-//
-//
-//        for (i in currentEmojiList.indices) {
-//            val image = ImageView(this)
-//            image.setImageResource(getImageId(this, currentEmojiList[i].toString()))
-//            image.adjustViewBounds = true
-//            image.maxWidth = maxWidth
-//
-//            if (sumWidth + maxWidth > width) {
-//                val tableRow = TableRow(this)
-//                emojiTable.addView(tableRow)
-//                sumWidth = 0
-//            }
-//            sumWidth += maxWidth
-//
-//
-//            val numberOfRows = emojiTable.childCount
-//            val lastRowView = emojiTable.getChildAt(numberOfRows - 1)
-//            val lastRow: TableRow = lastRowView as TableRow
-//            lastRow.addView(image)
-//        }
-        val answerTextField:EditText = findViewById(R.id.editText)
-        answerTextField.text.clear()
+    private fun drawMainScreen(){
+        val currentRiddleInd = PreferenceHelper(this)!!.getRiddleInd()
 
-        val editText:EditText = findViewById(R.id.editText)
-        editText.setBackgroundColor(Color.WHITE)
+        drawEmojiSequence(currentRiddleInd)
+        val answerTextField:EditText = findViewById(R.id.editText)
+        if (riddlesAnsweredArray[currentRiddleInd])
+        {
+            answerTextField.setText(answer[currentRiddleInd])
+            answerTextField.setBackgroundColor(Color.GREEN)
+            answerTextField.clearFocus()
+        }
+        else
+        {
+            answerTextField.text.clear()
+            answerTextField.setBackgroundColor(Color.WHITE)
+        }
 
 
         val ansButton:Button = findViewById(R.id.ansButton)
         ansButton.isClickable = true
 
-        val nextButton:Button = findViewById(R.id.skipButton)
-        nextButton.text = "ПРОПУСТИТЬ"
+
 
         val cancelButtonId = getImageId(this, "ic_cancel_black_24dp.xml")
-        editText.setCompoundDrawablesWithIntrinsicBounds(0, cancelButtonId, 0, 0)
+        answerTextField.setCompoundDrawablesWithIntrinsicBounds(0, cancelButtonId, 0, 0)
     }
 
     private fun getImageId(context: Context, imageName: String): Int {
@@ -330,8 +341,7 @@ class GameActivity : AppCompatActivity() {
         val editText:EditText = findViewById(R.id.editText)
         editText.setBackgroundColor(Color.GREEN)
 
-        val nextButton:Button = findViewById(R.id.skipButton)
-        nextButton.text = "СЛЕДУЮЩАЯ ПОГОВОРКА"
+
 
         val ansButton:Button = findViewById(R.id.ansButton)
         ansButton.isClickable = false

@@ -12,7 +12,10 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimary" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+    >
 
         <com.google.android.flexbox.FlexboxLayout
                 android:layout_width="match_parent"
@@ -40,7 +43,7 @@
                     android:inputType="textPersonName"
                     android:ems="10"
                     android:hint="Введите ответ"
-                    />
+            />
 
             <Button
                     android:id="@+id/eraseButton"
@@ -53,41 +56,58 @@
         </FrameLayout>
 
 
-
-        <LinearLayout
-                android:orientation="horizontal"
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp" android:gravity="bottom">
+                android:layout_margin="8dp" android:gravity="bottom" android:id="@+id/linearLayout4">
 
+            <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    ads:srcCompat="@drawable/prev_button_icon"
+                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/imageButton3"
+                    android:padding="10dp" android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="prevRiddleButtonReaction"/>
+            <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    ads:srcCompat="@drawable/next_button_icon"
+                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    android:scaleType="fitCenter"
+                    android:padding="10dp" app:layout_constraintStart_toEndOf="@+id/imageButton3"
+                    android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/imageButton4" android:onClick="skipRiddleButtonReaction"/>
             <Button
-                    android:text="Пропустить"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:id="@+id/skipButton"
-                    android:onClick="skipRiddleButtonReaction"
-
-            />
-            <Button
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     android:text="Ответить"
                     android:id="@+id/ansButton"
                     android:onClick="giveAnswerButtonReaction"
-            />
-        </LinearLayout>
+                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/imageButton4" android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            ads:adSize="SMART_BANNER"
-            tools:layout_height="50dp"
-            ads:adUnitId="@string/banner_ad_unit_id">
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="SMART_BANNER"
+                tools:layout_height="50dp"
+                ads:adUnitId="@string/banner_ad_unit_id">
         </com.google.android.gms.ads.AdView>
 
 
