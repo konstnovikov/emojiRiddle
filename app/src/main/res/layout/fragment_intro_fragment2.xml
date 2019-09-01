@@ -3,20 +3,23 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
+                                                   android:screenOrientation="portrait"
                                                    android:gravity="center"
-                                                   android:background="#25ed46"
+                                                   android:background="#c64e77"
                                                    android:id="@+id/linearLayout2">
 
     <TextView
             android:text="Используй кнопки вперед и назад, чтобы пропустить поговорку или вернуться обратно"
-            android:textSize="25sp"
+            android:textColor="#fff"
+            android:textSize="20sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/textView21"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="16dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp" android:layout_marginRight="16dp"
-            app:layout_constraintHorizontal_bias="0.5"/>
+            app:layout_constraintHorizontal_bias="0.5" android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

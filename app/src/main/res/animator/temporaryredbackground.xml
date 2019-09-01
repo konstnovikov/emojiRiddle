@@ -4,9 +4,9 @@
 <set android:ordering="sequentially">
 <objectAnimator
 android:propertyName="backgroundColor"
-android:duration="100"
+android:duration="140"
 android:valueFrom="#FFFFFF"
-android:valueTo="#FF0000"
+android:valueTo="#ea0808"
 android:startOffset="0"
 android:repeatCount="0"
 android:valueType="colorType"
@@ -14,8 +14,8 @@ android:repeatMode="reverse"
 />
 <objectAnimator
 android:propertyName="backgroundColor"
-android:duration="100"
-android:valueFrom="#FF0000"
+android:duration="140"
+android:valueFrom="#ea0808"
 android:valueTo="#FFFFFF"
 android:startOffset="0"
 android:repeatCount="0"
@@ -29,7 +29,7 @@ android:valueType="colorType"
                 android:valueFrom="0"
                 android:valueTo="10dp"
                 android:startOffset="0"
-                android:repeatCount="5"
+                android:repeatCount="7"
                 android:repeatMode="reverse"
                 android:valueType="floatType"
 

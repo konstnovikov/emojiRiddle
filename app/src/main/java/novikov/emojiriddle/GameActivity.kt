@@ -43,30 +43,30 @@ class GameActivity : AppCompatActivity() {
     val RIDDLES_ANSWERED_IND = 0
     val RIDDLES_SKIPPED_IND = 1
 
-    private val riddles:Array<Array<String>> = arrayOf(
+    private val riddles: Array<Array<String>> = arrayOf(
+        arrayOf("ruler", "ruler", "ruler", "ruler", "ruler", "ruler", "ruler", "scissors"),
+        arrayOf("head", "thumbsup", "head", "head", "thumbsup", "thumb"),
+        arrayOf("hare", "hare", "run", "oops"),
+        arrayOf("silence", "first"),
+        arrayOf("clock", "money"),
+        arrayOf("not","fish","lobster","fish"),
         arrayOf("not", "king", "right", "head"),
-        arrayOf("eye","eye","right","fear"),
-        arrayOf("nurse","nurse","nurse","nurse","nurse","nurse","nurse","baby","not","eye"),
-        arrayOf("ruler","ruler","ruler","ruler","ruler","ruler","ruler","scissors"),
-        arrayOf("worker","not","wolf","worker","not","right","tree","tree","tree"),
-        arrayOf("run","laugh"),
-        arrayOf("rabbit","rabbit","oops"),
-        arrayOf("head","thumb","head","head","thumb","thumb"),
-        arrayOf("intelligence","right","oldman"),
+        arrayOf("eye", "eye", "right", "fear"),
+        arrayOf("nurse", "nurse", "nurse", "nurse", "nurse", "nurse", "nurse", "baby", "not", "eye"),
+        arrayOf("worker", "not", "wolf", "worker", "not", "right", "tree", "tree", "tree"),
+        arrayOf("run", "laugh", "laugh", "laugh"),
+        arrayOf("intelligence", "right", "oldman"),
         arrayOf("one", "stadium", "not", "warrior"),
         arrayOf("book", "book", "book", "mother", "study"),
         arrayOf("strength", "stop", "intelligence"),
         arrayOf("first", "pancake", "thread"),
         arrayOf("fire", "right", "fire"),
-        arrayOf("first", "guy","village"),
+        arrayOf("first", "guy", "village"),
         arrayOf("poop", "right", "king"),
         arrayOf("intelligence", "mountain", "not", "walk", "intelligence", "mountain", "around"),
         arrayOf("cheese", "sunflower", "slide"),
-        arrayOf("hare", "hare", "run", "oops"),
         arrayOf("shirt", "baby"),
         arrayOf("swan", "water"),
-        arrayOf("silence", "first"),
-        arrayOf("clock", "money"),
         arrayOf("not", "worker", "not", "tableware"),
         arrayOf("guy", "guy", "guy", "guy", "guy", "guy", "guy", "turtle", "not", "timer"),
         arrayOf("bear", "ear", "animalsteps"),
@@ -76,32 +76,37 @@ class GameActivity : AppCompatActivity() {
         arrayOf("night", "right", "sunrise", "intelligence"),
         arrayOf("apple", "not", "rocket", "falling", "tree"),
         arrayOf("bomb", "not", "build"),
-        arrayOf("not", "fire", "not", "steam")
+        arrayOf("not", "fire", "not", "steam"),
+        arrayOf("fear","wolf","not", "walk", "tree", "tree", "tree"),
+        arrayOf("eye","eye","fear","hands","worker"),
+        arrayOf("worker","clock","clock","clock","laugh","clock"),
+        arrayOf("sleep","not","fist"),
+        arrayOf("not","not","judge")
     )
     val answer = arrayOf(
+        "Семь раз отмерь - один раз отрежь.",
+        "Одна голова хорошо, а две - лучше.",
+        "За двумя зайцами погонишься - ни одного не поймаешь.",
+        "Молчание - золото.",
+        "Время - деньги.",
+        "На безрыбье и рак рыба.",
         "Без царя в голове.",
         "У страха глаза велики.",
         "У семи нянек дитя без глаза.",
-        "Семь раз отмерь - один раз отрежь.",
         "Работа не волк - в лес не убежит.",
         "Поспешишь — людей насмешишь.",
-        "За двумя зайцами погонишься, ни одного не поймаешь.",
-        "Одна голова хорошо, а две - лучше.",
         "Будешь много знать — скоро состаришься.",
         "Один в поле не воин.",
         "Повторенье - мать ученья.",
-        "Сила есть, ума не надо.",
+        "Сила есть - ума не надо.",
         "Первый блин комом.",
         "Из огня да в полымя.",
         "Первый парень на деревне.",
         "Из грязи в князи.",
         "Умный в гору не пойдёт, умный гору обойдёт.",
         "Как сыр в масле кататься.",
-        "За двумя зайцами погонишься - ни одного не поймаешь.",
         "В рубашке родился.",
         "Как с гуся вода.",
-        "Молчание - золото.",
-        "Время - деньги.",
         "Кто не работает, тот не ест.",
         "Семеро одного не ждут.",
         "Медведь на ухо наступил.",
@@ -111,14 +116,19 @@ class GameActivity : AppCompatActivity() {
         "Утро вечера мудренее.",
         "Яблоко от яблони недалеко падает.",
         "Ломать - не строить.",
-        "Нет дыма без огня."
+        "Нет дыма без огня.",
+        "Волков бояться - в лес не ходить.",
+        "Глаза боятся, а руки делают.",
+        "Делу время, потехе час.",
+        "Лежачего не бьют.",
+        "На нет и суда нет."
     )
 
 
     private val indArray = riddles.indices
 
-    private val achievementNames:Array<String> = arrayOf(
-        "Новичок: Отгадана первая поговорка",
+    private val achievementNames: Array<String> = arrayOf(
+        "Отгадана первая поговорка",
         "Отгадано 5 поговорок",
         "Отгадано 10 поговорок",
         "Отгаданы все поговорки",
@@ -129,8 +139,8 @@ class GameActivity : AppCompatActivity() {
         "Пропущено 5 поговорок",
         "Пропущено 10 поговорок"
     )
-    private val achievementReactions:Array<String> = arrayOf(
-        "Новичок: Отгадана первая поговорка",
+    private val achievementReactions: Array<String> = arrayOf(
+        "Отгадана первая поговорка",
         "Отгадано 5 поговорок",
         "Отгадано 10 поговорок",
         "Отгаданы все поговорки",
@@ -157,7 +167,7 @@ class GameActivity : AppCompatActivity() {
     val FIVE_RIDDLES_IN_A_ROW_SKIPPED_IND = 10
     val TEN_RIDDLES_IN_A_ROW_SKIPPED_IND = 11
 
-    private var unlockedAchievements: BooleanArray =  BooleanArray(achievementNames.size)
+    private var unlockedAchievements: BooleanArray = BooleanArray(achievementNames.size)
     private var riddlesAnsweredArray: BooleanArray = BooleanArray(riddles.size)
     private var riddlesSkippedArray: BooleanArray = BooleanArray(riddles.size)
 
@@ -171,14 +181,15 @@ class GameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (savedInstanceState != null) {
+            PreferenceHelper(this)!!.putRiddleInd(savedInstanceState.getInt("myInt"))
+        }
         checkInputFiles()
         readState()
         readAchievements()
         setContentView(R.layout.activity_game)
-        for (i in riddlesAnsweredArray.indices)
-        {
-            if (!riddlesAnsweredArray[i])
-            {
+        for (i in riddlesAnsweredArray.indices) {
+            if (!riddlesAnsweredArray[i]) {
                 PreferenceHelper(this)!!.putRiddleInd(i)
                 break
             }
@@ -192,8 +203,8 @@ class GameActivity : AppCompatActivity() {
 
         val inputStream = this.resources.openRawResource(R.raw.dictionary)
         val adageList = mutableListOf<String>()
-        inputStream.bufferedReader(charset("Windows-1251")).useLines { lines -> lines.forEach { adageList.add(it)} }
-        adageList.forEach{println(">  $it")}
+        inputStream.bufferedReader(charset("Windows-1251")).useLines { lines -> lines.forEach { adageList.add(it) } }
+        adageList.forEach { println(">  $it") }
         val adapter = ArrayAdapter<String>(
             this, android.R.layout.simple_dropdown_item_1line, adageList
         )
@@ -207,18 +218,17 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-    fun giveAnswerButtonReaction(view: View){
+    fun giveAnswerButtonReaction(view: View) {
         hideKeyboardFrom(this, view)
         val editText: EditText = findViewById(R.id.editText)
-        val ans:String = editText.text.toString()
+        val ans: String = editText.text.toString()
 
         var answerReactionString: String
         var rightAnswerGiven: Boolean
         if (checkAnswerString(ans, answer[PreferenceHelper(this)!!.getRiddleInd()])) {
             answerReactionString = "Ура! Правильно!"
             rightAnswerGiven = true
-        }
-        else {
+        } else {
             answerReactionString = "Попробуйте еще!"
             rightAnswerGiven = false
         }
@@ -233,34 +243,32 @@ class GameActivity : AppCompatActivity() {
 //            popupMessage.show()
 //
 //            skipRiddleButtonReaction(view)
-        }
-        else
+        } else
             showError()
         riddleAttempts[PreferenceHelper(this)!!.getRiddleInd()]++
         checkAchievements()
 
     }
-    fun skipRiddleButtonReaction(view: View){
+
+    fun skipRiddleButtonReaction(view: View) {
         val currentRiddleInd = PreferenceHelper(this)!!.getRiddleInd() + 1
         if (currentRiddleInd >= riddles.size) {
             finish()
             outOfRiddlesRespond(view)
-        }
-        else {
+        } else {
             PreferenceHelper(this)!!.putRiddleInd(currentRiddleInd)
             drawMainScreen()
         }
     }
 
-    fun prevRiddleButtonReaction(view: View){
-        if (PreferenceHelper(this)!!.getRiddleInd() != 0)
-        {
+    fun prevRiddleButtonReaction(view: View) {
+        if (PreferenceHelper(this)!!.getRiddleInd() != 0) {
             PreferenceHelper(this)!!.putRiddleInd(PreferenceHelper(this)!!.getRiddleInd() - 1)
             drawMainScreen()
         }
     }
 
-    private fun drawEmojiSequence(numberOfRiddle: Int){
+    private fun drawEmojiSequence(numberOfRiddle: Int) {
         val scale = resources.displayMetrics.density
         val currentEmojiList = riddles[numberOfRiddle];
         val emojiTable: FlexboxLayout = findViewById(R.id.emojiSequenceView)
@@ -278,27 +286,23 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-    private fun drawMainScreen(){
+    private fun drawMainScreen() {
         val currentRiddleInd = PreferenceHelper(this)!!.getRiddleInd()
 
         drawEmojiSequence(currentRiddleInd)
-        val answerTextField:EditText = findViewById(R.id.editText)
-        if (riddlesAnsweredArray[currentRiddleInd])
-        {
+        val answerTextField: EditText = findViewById(R.id.editText)
+        if (riddlesAnsweredArray[currentRiddleInd]) {
             answerTextField.setText(answer[currentRiddleInd])
-            answerTextField.setBackgroundColor(Color.GREEN)
+            answerTextField.setBackgroundColor(resources.getColor(R.color.colorRightAnswer))
             answerTextField.clearFocus()
-        }
-        else
-        {
+        } else {
             answerTextField.text.clear()
             answerTextField.setBackgroundColor(Color.WHITE)
         }
 
 
-        val ansButton:Button = findViewById(R.id.ansButton)
+        val ansButton: Button = findViewById(R.id.ansButton)
         ansButton.isClickable = true
-
 
 
         val cancelButtonId = getImageId(this, "ic_cancel_black_24dp.xml")
@@ -308,6 +312,7 @@ class GameActivity : AppCompatActivity() {
     private fun getImageId(context: Context, imageName: String): Int {
         return context.resources.getIdentifier("drawable/$imageName", null, context.packageName)
     }
+
     private fun checkAnswerString(ans: String, rightAns: String): Boolean {
         var ansLoc = ans.toLowerCase()
         val re = Regex("[^А-Яа-я0-9]")
@@ -321,7 +326,6 @@ class GameActivity : AppCompatActivity() {
     }
 
 
-
     fun hideKeyboardFrom(context: Context, view: View) {
         val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
@@ -333,17 +337,16 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun eraseText(view: View) {
-        val editText:EditText = findViewById(R.id.editText)
+        val editText: EditText = findViewById(R.id.editText)
         editText.text.clear()
     }
 
-    private fun rightAnswer(view:View){
-        val editText:EditText = findViewById(R.id.editText)
-        editText.setBackgroundColor(Color.GREEN)
+    private fun rightAnswer(view: View) {
+        val editText: EditText = findViewById(R.id.editText)
+        editText.setBackgroundColor(resources.getColor(R.color.colorRightAnswer))
 
 
-
-        val ansButton:Button = findViewById(R.id.ansButton)
+        val ansButton: Button = findViewById(R.id.ansButton)
         ansButton.isClickable = false
 
         val handler = Handler()
@@ -351,14 +354,14 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun showError() {
-        val editText:EditText = findViewById(R.id.editText)
+        val editText: EditText = findViewById(R.id.editText)
 
 //        val set: AnimatorSet = AnimatorInflater.loadAnimator(this, R.animator.temporaryredbackground)
 //            .apply {
 //                setTarget(editText)
 //                start()
 //            }
-        Log.i("info","button clicked")
+        Log.i("info", "button clicked")
         val set: AnimatorSet = AnimatorInflater.loadAnimator(this, R.animator.temporaryredbackground)
             .apply {
                 setTarget(editText)
@@ -370,7 +373,7 @@ class GameActivity : AppCompatActivity() {
     private fun saveAchivements() {
         try {
             // Open Stream to write file.
-            val context:Context = this;
+            val context: Context = this;
             val out = context.openFileOutput("achievements.txt", MODE_PRIVATE)
             for (item in unlockedAchievements) {
                 out.write(if (item) 1 else 0)
@@ -381,8 +384,9 @@ class GameActivity : AppCompatActivity() {
         }
 
     }
+
     private fun readAchievements() {
-        if (fileExist(  "achievements.txt")){
+        if (fileExist("achievements.txt")) {
 
 
             val file = this.getFileStreamPath("achievements.txt")
@@ -401,9 +405,8 @@ class GameActivity : AppCompatActivity() {
                 output[X] = false
             }
             unlockedAchievements = output
-        }
-        else{
-            for (i in achievementNames.indices){
+        } else {
+            for (i in achievementNames.indices) {
                 unlockedAchievements[i] = false
             }
 
@@ -411,7 +414,7 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-    private fun checkAchievements(){
+    private fun checkAchievements() {
         if (numberOfTrues(riddlesAnsweredArray) > 0 && !unlockedAchievements[FIRST_RIDDLE_ANSWERED_IND]) {
             unlockedAchievements[FIRST_RIDDLE_ANSWERED_IND] = true
             Toast.makeText(this, achievementReactions[FIRST_RIDDLE_ANSWERED_IND], Toast.LENGTH_SHORT).show()
@@ -436,11 +439,11 @@ class GameActivity : AppCompatActivity() {
             unlockedAchievements[TEN_RIDDLES_IN_A_ROW_ANSWERED_IND] = true
             Toast.makeText(this, achievementReactions[TEN_RIDDLES_IN_A_ROW_ANSWERED_IND], Toast.LENGTH_SHORT).show()
         }
-        if (riddleAttempts.max()!! >= 5 && !unlockedAchievements[FIVE_ATTEMPTS_ON_A_RIDDLE_IND]){
+        if (riddleAttempts.max()!! >= 5 && !unlockedAchievements[FIVE_ATTEMPTS_ON_A_RIDDLE_IND]) {
             unlockedAchievements[FIVE_ATTEMPTS_ON_A_RIDDLE_IND] = true
             Toast.makeText(this, achievementReactions[FIVE_ATTEMPTS_ON_A_RIDDLE_IND], Toast.LENGTH_SHORT).show()
         }
-        if (riddleAttempts.max()!! >= 10 && !unlockedAchievements[TEN_ATTEMPTS_ON_A_RIDDLE_IND]){
+        if (riddleAttempts.max()!! >= 10 && !unlockedAchievements[TEN_ATTEMPTS_ON_A_RIDDLE_IND]) {
             unlockedAchievements[TEN_ATTEMPTS_ON_A_RIDDLE_IND] = true
             Toast.makeText(this, achievementReactions[TEN_ATTEMPTS_ON_A_RIDDLE_IND], Toast.LENGTH_SHORT).show()
         }
@@ -465,17 +468,16 @@ class GameActivity : AppCompatActivity() {
         saveAchivements()
     }
 
-    private fun numberOfTruesInARow(boolArray: BooleanArray): Int{
-        var num:Int = 0
+    private fun numberOfTruesInARow(boolArray: BooleanArray): Int {
+        var num: Int = 0
         var maxTrueInARow: Int = 0
-        for (i in boolArray.indices){
+        for (i in boolArray.indices) {
             if (boolArray[i]) {
                 num++
-                if (num > maxTrueInARow){
+                if (num > maxTrueInARow) {
                     maxTrueInARow = num
                 }
-            }
-            else{
+            } else {
                 num = 0
             }
         }
@@ -483,8 +485,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun numberOfTrues(boolArray: BooleanArray): Int {
-        var num:Int = 0
-        for (i in boolArray.indices){
+        var num: Int = 0
+        for (i in boolArray.indices) {
             if (boolArray[i]) {
                 num++
             }
@@ -493,7 +495,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun readState() {
-        if (fileExist("state.txt")){
+        if (fileExist("state.txt")) {
 
             val file = this.getFileStreamPath("state.txt")
             val inputStream = FileInputStream(file)
@@ -506,25 +508,25 @@ class GameActivity : AppCompatActivity() {
 
             riddlesAnswered = data[RIDDLES_ANSWERED_IND].toInt()
 
-            for (i in riddlesAnsweredArray.indices){
-                var answered:Boolean = false
-                if (data[i + RIDDLES_SKIPPED_IND].toInt() != 0){
+            for (i in riddlesAnsweredArray.indices) {
+                var answered: Boolean = false
+                if (data[i + RIDDLES_SKIPPED_IND].toInt() != 0) {
                     answered = true
                 }
                 riddlesAnsweredArray[i] = answered
             }
-            for (i in riddlesSkippedArray.indices){
-                var skipped:Boolean = false
-                if (data[i + riddlesAnsweredArray.size + RIDDLES_SKIPPED_IND].toInt() != 0){
+            for (i in riddlesSkippedArray.indices) {
+                var skipped: Boolean = false
+                if (data[i + riddlesAnsweredArray.size + RIDDLES_SKIPPED_IND].toInt() != 0) {
                     skipped = true
                 }
-                riddlesAnsweredArray[i] = skipped
+                riddlesSkippedArray[i] = skipped
             }
-            for (i in riddleAttempts.indices){
-                riddleAttempts[i] = data[i + riddlesAnsweredArray.size + riddlesSkippedArray.size + RIDDLES_SKIPPED_IND].toInt()
+            for (i in riddleAttempts.indices) {
+                riddleAttempts[i] =
+                        data[i + riddlesAnsweredArray.size + riddlesSkippedArray.size + RIDDLES_SKIPPED_IND].toInt()
             }
-        }
-        else{
+        } else {
             for (i in riddlesAnsweredArray.indices)
                 riddlesAnsweredArray[i] = false
             for (i in riddlesSkippedArray.indices)
@@ -536,8 +538,16 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun writeState() {
-        val context:Context = this;
+        val context: Context = this;
         val out = context.openFileOutput("state.txt", MODE_PRIVATE)
+        riddlesAnswered = 0;
+        for (i in riddlesAnsweredArray)
+        {
+            if (i)
+            {
+                riddlesAnswered++
+            }
+        }
         out.write(riddlesAnswered)
         for (item in riddlesAnsweredArray) {
             out.write(if (item) 1 else 0)
@@ -555,16 +565,16 @@ class GameActivity : AppCompatActivity() {
         if (fileExist("state.txt")) {
             val file = this.getFileStreamPath("state.txt")
             val fileLength = file.length().toInt()
-            if (fileLength != 1 + riddlesAnsweredArray.size + riddlesSkippedArray.size + riddleAttempts.size){
+            if (fileLength != 1 + riddlesAnsweredArray.size + riddlesSkippedArray.size + riddleAttempts.size) {
                 file.delete()
             }
         }
-        if (fileExist(  "achievements.txt")) {
+        if (fileExist("achievements.txt")) {
 
 
             val file = this.getFileStreamPath("achievements.txt")
             val fileLength = file.length().toInt()
-            if (fileLength != unlockedAchievements.size){
+            if (fileLength != unlockedAchievements.size) {
                 file.delete()
             }
         }
@@ -572,7 +582,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun fileExist(fname: String): Boolean {
-        val context:Context = this
+        val context: Context = this
         val file = context.getFileStreamPath(fname)
         return file.exists()
     }
@@ -583,4 +593,13 @@ class GameActivity : AppCompatActivity() {
         writeState()
         saveAchivements()
     }
+
+    public override fun onSaveInstanceState(savedInstanceState: Bundle) {
+
+        writeState()
+        saveAchivements()
+        savedInstanceState.putInt("MyInt", PreferenceHelper(this)!!.getRiddleInd())
+        super.onSaveInstanceState(savedInstanceState)
+    }
+
 }
